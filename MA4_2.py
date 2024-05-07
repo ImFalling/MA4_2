@@ -72,6 +72,10 @@ def main():
 	#print(f"Fib(47) with Numba: {fib_numba(47)}")
 	#f.setAge(47)
 	#print(f"Fib(47) with C++: {f.fib()}")
+	'''
+	Fib(47) with Numba: 2971215073
+	Fib(47) with C++: 2971215073
+	'''
 
 if __name__ == '__main__':
 	main()
