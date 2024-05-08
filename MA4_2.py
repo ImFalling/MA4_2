@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
+""" MA4_2.py
 
+Student: Jakob Frick
+Reviewed by: David Bagstevold
+Date reviewed: 2024-05-08
+"""
 from person import Person
 import matplotlib.pyplot as plotter
 from numba import njit

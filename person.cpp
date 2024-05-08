@@ -1,5 +1,10 @@
 #include <cstdlib>
 // Person class 
+// person.cpp
+//
+// Student: Jakob Frick
+// Reviewed by: David Bagstevold
+// Date reviewed: 2024-05-08
 
 class Person{
 	public:
