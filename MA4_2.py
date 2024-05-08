@@ -5,17 +5,6 @@ import matplotlib.pyplot as plotter
 from numba import njit
 import time
 
-def fib_py_mem(n: int, memory = None):
-	"""Fibonacci function, uses memoization."""
-	if n % 1 != 0 or n < 0:
-		print(f"Function fib() cannot be called with {n}, only with positive whole integers.")
-		return None
-	if memory == None:
-		memory = {0: 0, 1: 1}
-	if n not in memory:
-		memory[n] = fib_py_mem(n-1, memory) + fib_py_mem(n-2, memory)
-	return memory[n]
-
 def fib_py(n):
 	if n<= 1:
 		return n
@@ -39,16 +28,20 @@ def main():
 	print(f"Python w/ numba: {fib_numba(30)}")
 	print(f"Vanilla python: {fib_py(30)}")
 
+	# Specify interval to try across functions
 	fromN = 20
 	toN = 35
+	# Wrapper function for matching function calls with fib_numba and fib_py
 	def cppfoo(n):
 		f.setAge(n)
 		return f.fib()
 	
+	# Establish the data structures to be accessed by pyplot
 	cpp = {"call": cppfoo, "x": [], "y": [], "marker": "ro--", "id": "C++"}
 	numba = {"call": fib_numba, "x": [], "y": [], "marker": "bo--", "id": "Python w/ Numba"}
 	vanilla = {"call": fib_py, "x": [], "y": [], "marker": "go--", "id": "Python (Vanilla)"}
 	
+	# Call the functions sequentially and populate their respective dataset
 	for dataset in [cpp, numba, vanilla]:
 		for n in range(fromN, toN+1):
 			dataset["x"].append(n)
@@ -59,9 +52,9 @@ def main():
 		plotter.plot(dataset["x"], dataset["y"], dataset["marker"], label=dataset["id"])
 		print(f'=== {dataset["id"]} ===\nx-values: {dataset["x"]}\ny-values: {dataset["y"]}')
 
+	# Graph vanity setup
 	plotter.xlabel("n=", fontweight="semibold", fontsize="13")
 	plotter.ylabel("Time (seconds)", fontweight="semibold", fontsize="13")
-	#plotter.axis([fromN, toN, 0, vanilla["y"][-1] + vanilla["y"][-1]/10])
 	plotter.xticks(range(fromN, toN+1))
 	plotter.xlim(right=toN+0.5)
 	plotter.grid(True)
@@ -69,10 +62,12 @@ def main():
 	plotter.savefig(f"{fromN}-{toN}_results.png")
 	plotter.show()
 
+	# Commented out to save time during runtime
 	#print(f"Fib(47) with Numba: {fib_numba(47)}")
 	#f.setAge(47)
 	#print(f"Fib(47) with C++: {f.fib()}")
 	'''
+	Example output:
 	Fib(47) with Numba: 2971215073
 	Fib(47) with C++: 2971215073
 	'''

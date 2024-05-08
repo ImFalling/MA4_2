@@ -29,14 +29,14 @@ float Person::getDecades(){
 	return (float)age/10;
 	}
 
+//Written due to misunderstanding of the instructions.
 long Person::fib_mem(){
-	int x = age;
 	//Init memoization array (maximum age 999)
 	long memory[1000] = {0};
 	memory[0] = 0;
 	memory[1] = 0;
 	//Define lambda expression
-	auto calc = [&memory, x](int n, auto& self) -> long{
+	auto calc = [&memory](int n, auto& self) -> long{
 		if(n <= 1){
 			return n;
 		}
@@ -48,28 +48,24 @@ long Person::fib_mem(){
 	};
 	//Execute lambda expression if age does not exceed 1000
 	//Feeds the lambda expression along with the args to allow self-reference
-	if(x > 999 || x < 0){
+	if(age > 999 || age < 0){
 		return -1;
 	}
-	long y = calc(x, calc);
+	long y = calc(age, calc);
 	return y;
 } 
 
+// long datatype (64-bit integer) avoids standard 16-bit int overflow
 long Person::fib(){
-	int x = age;
 	//Define lambda expression
-	auto calc = [x](int n, auto& self) -> long{
+	auto calc = [](int n, auto& self) -> long{
 		if(n <= 1){
 			return n;
 		}
 		return (self(n-1, self) + self(n-2, self));
 	};
-	//Execute lambda expression if age does not exceed 1000
 	//Feeds the lambda expression along with the args to allow self-reference
-	if(x > 999 || x < 0){
-		return -1;
-	}
-	long y = calc(x, calc);
+	long y = calc(age, calc);
 	return y;
 }
 
